@@ -1,15 +1,24 @@
 const express = require('express');
-
+const bodyParser = require("body-parser")
+const dbConnect = require("./config/dbConnect")
 const app = express();
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 4000;
+const authRouter = require("./routes/authRoute")
 
+dbConnect();
 
 
 app.listen(PORT, ()=>{
-    console.log(`server is running at port ${PORT}`)
+    console.log(`server is running at port ${PORT} // http://localhost:4001/`)
 })
-require("./config/dbConnect");
+
+
+// app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use("/api/user",authRouter)
+
 app.use("/",(req,res)=>{
   res.send("server has started running successfully")
 })
