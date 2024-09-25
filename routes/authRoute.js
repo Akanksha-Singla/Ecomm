@@ -4,6 +4,8 @@ const {createUser} = require("../controller/userCtrl")
 
 router.post("/register",createUser);
 console.log("in auth route")
+console.log("in auth route")
+
 
 
 module.exports = router;
