@@ -4,9 +4,9 @@ const bcrypt = require("bcryptjs")
 
 
 // {
-//     "_id":"2",
+//     "basicId":"2",
 //     "name":"akanksha",
-//    " email":"1123@gmail.com",
+//     "email":"1123@gmail.com",
 //     "mobile":"12324",
 //    " address":"lkjlk",
 //     "city":"jind",
@@ -18,64 +18,51 @@ const bcrypt = require("bcryptjs")
 // }
 var basicDetailSchema = new mongoose.Schema({
     //mandatory
-   BasicId:{                                   
-        type:String,
-        // required:true,
-        
-    },
-   
-    //mandatory
-    name:{
-        type:String,
-        // required:true,
-        
-    },
-    //optional
-   email:{
-        type:String,
-        // required:true,
-        // unique:true,
-    },
-    mobile:{
-        type:String,
-        // required:true,
-        // unique:true,
-    },
-    address:{
-        type:String,
-        // required:true,
-    },
-    city:{
-        type:String,
-        // required:true,
-    },
-    state:{
-        type:String,
-        // required:true,
+    basicDetails: {
+        name: String,
+        email: String,
+        phone: String,
+        address: String,
+        city: String,
+        state: String,
+        pincode: String,
+        intro: String,
+      },
+      education:{
+        degree: String,
+        institution: String,
+        percentage: Number,
+      },
+      experience: [{
+        organization: String,
+        location: String,
+        position: String,
+        ctc: Number,
+        startDate: Date,
+        endDate: Date,
+        technologies:[{ type: String }],
+      }],
+      projects: [{
+        title: String,
+        teamSize: Number,
+        duration: String,
+        technologies:[{ type: String }],
+        description: String,
+      }],
+      skills:[ {
+        skillName: String,
+        proficiency: Number,
+      }],
+      socialProfiles:[ {
+        platform: String,
+        link: String,
+      }],
 
-    },
-    pincode:{
-        type:String,
-        // required:true,
-
-    },
-    introPara:{
-        type:String,
-        // required:true,
-
-    },
-    //confirmPassword
-      profileImage:{
-data:Buffer,
-contentType:String
-
-     },
-
-    //  user: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: "User",
-    //   },
+     user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
    
 },
 );
@@ -83,4 +70,4 @@ contentType:String
 
 
 //Export the model
-module.exports = mongoose.model('cvDetail', basicDetailSchema);
+module.exports = mongoose.model('cvFormDetails', basicDetailSchema);

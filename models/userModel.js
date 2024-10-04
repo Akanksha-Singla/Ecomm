@@ -16,7 +16,7 @@ var userSchema = new mongoose.Schema({
     },
     //optional
     mobile:{
-        type:String,
+        type:Number,
         required:true,
         // unique:true,
     },
@@ -26,8 +26,9 @@ var userSchema = new mongoose.Schema({
     },
     //confirmPassword
       profileImage:{
-type:String,
-default:"../assets/images/emp1.jpg"
+        data:Buffer,
+        contentType:String
+        
      },
    
 },
