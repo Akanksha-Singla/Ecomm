@@ -21,11 +21,11 @@ var basicDetailSchema = new mongoose.Schema({
     basicDetails: {
         name: String,
         email: String,
-        phone: String,
+        phone: Number,
         address: String,
         city: String,
         state: String,
-        pincode: String,
+        pincode: Number,
         intro: String,
       },
       education:{
