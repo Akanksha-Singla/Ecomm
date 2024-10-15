@@ -25,8 +25,9 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use("/api/user",authRouter)
 app.use("/api/cv",basicDetailRoutes)
 
-app.use("/",(req,res)=>{
+app.get("/",(req,res)=>{
   res.send("server has started running successfully")
 })
+
 app.use(notFound);
-app.use(errorHandler)
+app.use(errorHandler);

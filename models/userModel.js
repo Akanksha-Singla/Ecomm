@@ -24,7 +24,8 @@ var userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    //confirmPassword
+   
+  
       profileImage:{
         data:Buffer,
         contentType:String
