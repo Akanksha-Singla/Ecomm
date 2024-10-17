@@ -57,7 +57,11 @@ var basicDetailSchema = new mongoose.Schema({
         platform: String,
         link: String,
       }],
-
+     cvImage:{
+        data:Buffer,
+        contentType:String
+        
+     },
      user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

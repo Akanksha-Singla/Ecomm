@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 
 const createCV = asyncHandler(async (req, res) => {
   const details = req.body;
-  console.log(details)
+
   try {
     const cvDoc = new basicDetailsModel({ ...details, user: req.user._id });
     const createdCV = await cvDoc.save();
@@ -28,7 +28,7 @@ const createCV = asyncHandler(async (req, res) => {
 
 const getCV = asyncHandler(async (req, res) => {
   const CV = await basicDetailsModel.find({ user: req.user._id });
-  console.log("userDetails",req.user);
+  
   
   if(CV){
    return res.status(200).json({
@@ -48,11 +48,11 @@ const getCV = asyncHandler(async (req, res) => {
 });
 
 const getUserDetails = asyncHandler(async(req,res)=>{
-  console.log("user DEtails")
+
   try{
     const user = await userModel.findById(req.user._id);
  if(user && user.profileImage && user.profileImage.data){
-      console.log(user.profileImage.contentType)
+     
 
     
       const base64Data = user.profileImage.data.toString("base64");
@@ -77,7 +77,6 @@ const getUserDetails = asyncHandler(async(req,res)=>{
 
 
 const updateCV = asyncHandler(async (req, res) => {
-  console.log("update function");
   const cv = await basicDetailsModel.findById(req.params._id);
   if (cv) {
     const updatedcv = await basicDetailsModel.updateOne(
@@ -98,7 +97,7 @@ const updateCV = asyncHandler(async (req, res) => {
 
 const getCVById = asyncHandler(async (req, res) => {
   const cv = await basicDetailsModel.findById(req.params._id);
-  console.log("entered in getcvid",cv)
+
 
   if (cv) {
     res.status(200).json({
@@ -115,7 +114,7 @@ const getCVById = asyncHandler(async (req, res) => {
 
 const deleteCVById = asyncHandler(async (req, res) => {
   const cv = await basicDetailsModel.deleteOne({ _id: req.params._id });
-  console.log("id to be deleted",req.params._id)
+  // console.log("id to be deleted",req.params._id)
   if(cv){
     res.status(204).json({
       status: 204,
@@ -132,11 +131,60 @@ const deleteCVById = asyncHandler(async (req, res) => {
   };
 });
 
+
+
+
+
+
+
+const uploadCVImage = asyncHandler(async (req, res) => {
+  console.log("upload cv body", req.body);
+  console.log("upload cv Image", req.file);
+
+  const filter = { _id: req.params._id };
+  console.log(req.params._id)
+
+  const updates = req.file
+    ? {
+        // cvImage: {
+        //   data: req.file.buffer,
+        //   contentType: req.file.mimetype,
+        // },
+        cvImage:req.file.buffer
+      }
+    : null;
+ 
+  if (!updates) {
+    return res.status(400).json({
+      status: 400,
+      message: "No image provided",
+    });
+  }
+
+  const image = await basicDetailsModel.updateOne(filter, updates);
+
+  if (image) {
+    return res.json({ status: 200, message: "Image uploaded successfully", image });
+  } else {
+    return res.status(404).json({
+      status: 404,
+      message: "CV not found",
+    });
+  }
+});
+
+
+
+
+
+
+
 module.exports = {
   createCV,
   getCV,
   updateCV,
   getCVById,
   deleteCVById,
-  getUserDetails
+  getUserDetails,
+  uploadCVImage
 };

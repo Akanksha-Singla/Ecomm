@@ -58,6 +58,11 @@ const socialProfilesSchema = Joi.object({
   _id: Joi.string().optional(),
 });
 
+const cvImageSchema = Joi.object({
+  data: Joi.binary().optional(),
+  contentType: Joi.string().optional(),
+})
+
 // Main CV validation schema
 const validateCvSchema = (req, res, next) => {
   const schema = Joi.object({
@@ -68,10 +73,7 @@ const validateCvSchema = (req, res, next) => {
     skills: Joi.array().items(skillsSchema).optional(),
     socialProfiles: Joi.array().items(socialProfilesSchema).optional(),
     user: Joi.string().optional(), // Assuming creator is a string ObjectId
-    image: Joi.object({
-      data: Joi.binary().optional(),
-      contentType: Joi.string().optional(),
-    }).optional(),
+    cvImage:cvImageSchema.optional()
   });
 
   const { error } = schema.validate(req.body);
